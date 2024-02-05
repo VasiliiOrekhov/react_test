@@ -1,0 +1,23 @@
+@import '@/style/backgrounds';
+
+.login {
+  @include system-background;
+
+  row-gap: 1.5rem;
+}
+
+.title {
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.signUpText:hover {
+  color: var(--sky);
+}
+
+.register {
+  font-weight: bold;
+
+  &:hover {
+    color: var(--sky);
+  }
+}

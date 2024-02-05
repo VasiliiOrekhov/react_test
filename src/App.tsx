@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorPage } from '@pages/Error';
+import { AppRouter } from '@components/AppRouter/AppRouter';
+import { Provider } from 'react-redux';
+
+import store from '@/store';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	useEffect(() => {
+		const fetchServerData = async () => {
+			const url = `http://localhost:${__SERVER_PORT__}`;
+			const response = await fetch(url);
+			const data = await response.json();
+			console.log(data);
+		};
+
+		fetchServerData();
+	}, []);
+
+	return (
+		<ErrorBoundary
+			fallback={<ErrorPage type="common" />}
+			onError={(error, info) => {
+				console.error({ error, info });
+			}}>
+			<Provider store={store}>
+				<AppRouter />
+			</Provider>
+		</ErrorBoundary>
+	);
 }
 
 export default App;
